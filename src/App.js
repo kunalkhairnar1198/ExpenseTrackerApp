@@ -1,10 +1,20 @@
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import Layout from './component/Layout/Layout';
+import Authpage from './component/Pages/Authpage';
 
 function App() {
   return (
-    <div className="App">
-        <h1>App Start</h1>
-    </div>
+    <>
+     <Layout>
+        <Switch>
+            <Route path='/'>
+              <Authpage/>
+            </Route>
+        </Switch>
+      </Layout>
+
+    </>
   );
 }
 
