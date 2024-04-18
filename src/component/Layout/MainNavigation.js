@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap'
+import {  Container, Nav,  Navbar } from 'react-bootstrap'
 import './MainNavigation.css'
 const MainNavigation = () => {
   return (
@@ -11,13 +11,13 @@ const MainNavigation = () => {
           </Navbar.Brand>
 
           <Nav className="me-auto mb-2 mb-lg-0">
-            <Nav.Link href="#">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#">Procuct</Nav.Link>
             <Nav.Link href="#">About us</Nav.Link>
           </Nav>
 
           <Nav className="d-flex align-items-center">
-                 <Nav.Link href="#">LogOut</Nav.Link>
+                 <Nav.Link href="/Authpage">LogOut</Nav.Link>
           </Nav>
       </Container>
     </Navbar>
