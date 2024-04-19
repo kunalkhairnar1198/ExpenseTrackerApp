@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import './AuthForm.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Store/auth-context';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true)
@@ -10,6 +11,8 @@ const AuthForm = () => {
     const passwordRef = useRef();
     const confirmPassRef = useRef();
     const navigate = useHistory()
+    const authctx = useContext(AuthContext)
+    
 
     const switchHandlers =()=>{
         setIsLogin(prevState => !prevState)
@@ -56,9 +59,10 @@ const AuthForm = () => {
             setIsLoading(false)
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('authtoken',data.idToken)
-                console.log('Authentication successful:', data.idToken);
-                navigate.replace('/')
+                console.log(authctx)
+                console.log('Authentication successful:', data);
+                authctx.login(data.idToken)
+                navigate.replace('/profilepage')
                 
             }else{
                 const errorData = await response.json();
@@ -67,7 +71,7 @@ const AuthForm = () => {
 
            
         } catch (error) {
-            alert('Error during authentication:', error.message);
+            console.log('Error during authentication:', error.message);
         }
     };
 
@@ -88,7 +92,7 @@ const AuthForm = () => {
                         </Form.Group>
 
                         {!isLogin && (
-                        <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                        <Form.Group className="mb-3" controlId="ConfirmPassword">
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" placeholder="Confirm Password" ref={confirmPassRef} />
                         </Form.Group>

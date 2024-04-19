@@ -5,7 +5,6 @@ const Layout = (props) => {
   return (
     <>
     <MainNavigation/>
-    {props.children}
     </>
   )
 }

@@ -2,22 +2,22 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './component/Layout/Layout';
 import Authpage from './component/Pages/Authpage';
-import Home from './component/Pages/Home';
+import Profilepage from './component/Pages/Profilepage';
 
 function App() {
   return (
     <>
-     <Layout>
         <Switch>
             <Route path='/' exact>
-              <Home/>
+              <Layout/>
             </Route>
-            <Route path='/Authpage'>
+            <Route path='/authpage' exact>
               <Authpage/>
             </Route>
+            <Route path='/profilepage' exact>
+              <Profilepage/>
+            </Route>
         </Switch>
-      </Layout>
-
     </>
   );
 }
