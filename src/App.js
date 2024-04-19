@@ -3,6 +3,8 @@ import './App.css';
 import Layout from './component/Layout/Layout';
 import Authpage from './component/Pages/Authpage';
 import Profilepage from './component/Pages/Profilepage';
+import UserProfileNotify from './component/Alert/UserProfileNotify';
+import Expensetrackerpage from './component/Expensetracker/Expensetrackerpage';
 
 function App() {
   return (
@@ -11,11 +13,17 @@ function App() {
             <Route path='/' exact>
               <Layout/>
             </Route>
-            <Route path='/authpage' exact>
+            <Route path='/authpage' >
               <Authpage/>
             </Route>
-            <Route path='/profilepage' exact>
+            <Route path='/profilepage' >
               <Profilepage/>
+            </Route>
+            <Route path='/userprofilenotify'>
+              <UserProfileNotify/>
+            </Route>
+            <Route path='/expensepage'>
+              <Expensetrackerpage/>
             </Route>
         </Switch>
     </>

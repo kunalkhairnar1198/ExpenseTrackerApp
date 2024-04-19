@@ -1,0 +1,36 @@
+.profile {
+    font-style: italic;
+    font-weight: 10px;
+    border-bottom-style: solid;
+    display: flex;
+    justify-content: space-between;
+  }
+
+.profile button {
+    border: none;
+    background-color: transparent;
+    color: blue;
+    font-style: italic;
+}
+
+  .section {
+    margin-left: 45%;
+    margin-top: 8%;
+  }
+  
+  .details {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+.details button {
+    background-color: transparent;
+    position: relative;
+    right: 35px;
+    width: 55px;
+    height: 22px;
+    top: 15px;
+    border-color: crimson;
+    border-radius: 5px;
+    color: brown;
+  }

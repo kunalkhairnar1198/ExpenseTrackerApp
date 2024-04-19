@@ -61,8 +61,11 @@ const AuthForm = () => {
                 const data = await response.json();
                 console.log(authctx)
                 console.log('Authentication successful:', data);
+
                 authctx.login(data.idToken)
-                navigate.replace('/profilepage')
+                authctx.iscompleteProfile(data.displayName)
+
+                data.displayName ? navigate.replace('/expensepage') :  navigate.replace('/profilepage')
                 
             }else{
                 const errorData = await response.json();

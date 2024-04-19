@@ -6,7 +6,9 @@ import './MainNavigation.css'
 const MainNavigation = () => {
   return (
     <>
+    
     <Navbar  expand="lg" className="custom-navbar">
+  
       <Container fluid>
           <Navbar.Brand href="/">
           <h3>Expense Tracker</h3>
