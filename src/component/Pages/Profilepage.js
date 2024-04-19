@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import Layout from '../Layout/Layout'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { AuthContext } from '../../Store/auth-context'
@@ -15,6 +15,11 @@ const Profilepage = () => {
 
   const userData = !authCtx.userdata;
   console.log(userData)
+
+  useEffect(()=>{
+    console.log('USEEFFECT WORK')
+    GetUserData()
+  },[])
 
   const updateHandler =async(event)=>{
     event.preventDefault()
@@ -42,12 +47,43 @@ const Profilepage = () => {
       const data = await response.json()
       navigate.replace('/expensepage')
 
-      console.log(data)
+      console.log('getuserData',data)
 
     } catch (error) { 
       console.log(error)
     }
-    
+  };
+
+  const GetUserData =async()=>{
+      try {
+        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
+          method:'POST',
+              headers:{
+                'Content-Type':'application/json',
+              },
+                  body:JSON.stringify({
+                    idToken:authCtx.token,
+                  })  
+        })
+
+        if(response.ok){
+          const data = await response.json()
+          const user = data.users[0]
+          // console.log(data.users)
+              if(user){
+                if(fullnameRef.current){
+                  fullnameRef.current.value = user.displayName || '';
+                }
+                if(linkRef.current){
+                  linkRef.current.value = user.photoUrl || '';
+                }
+              }
+        }else{
+          console.log('failed to retrive data', response.status)
+        }
+      } catch (error) {
+        console.log(error)
+      }
   }
 
 
