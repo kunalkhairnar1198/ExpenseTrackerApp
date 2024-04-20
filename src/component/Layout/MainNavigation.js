@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {  Container, Nav,   Navbar } from 'react-bootstrap'
 import  {NavLink}  from 'react-router-dom'
 import './MainNavigation.css'
+import { AuthContext } from '../../Store/auth-context'
 
 const MainNavigation = () => {
+    
+  const authCtx = useContext(AuthContext)
+  console.log(authCtx)
+
+  const logoutHanlder=()=>{
+    authCtx.logout()
+  }
+
   return (
     <>
     
@@ -21,7 +30,12 @@ const MainNavigation = () => {
           </Nav> */}
 
           <Nav className="d-flex align-items-center">
-                   <Nav.Link as={NavLink} to="/authpage" >SignIn</Nav.Link>
+                   {!authCtx.isLogedIn ? (
+                                <Nav.Link as={NavLink} to="/authpage" >SignIn</Nav.Link>
+                                ):(
+                                  <Nav.Link as={NavLink} to="/authpage" onClick={logoutHanlder}>SignOut</Nav.Link>
+                                )}
+                                
                    <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>
           </Nav>     
       </Container>

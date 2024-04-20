@@ -33,16 +33,17 @@ const VerifyUserEmail =()=>{
 }
 
 const logoutHanlder =()=>{
-
+    localStorage.removeItem('authtoken')
+    setToken(null)
 }
 
     const authValues ={
         token:token,
-        isLogedIn:false,
+        isLogedIn:userIsLoggedIn,
         userdata:userData,
         iscompleteProfile:CompleteHandler,
         login: loginHandler,
-        logout: (token)=>{},    
+        logout: logoutHanlder,    
     }
 return (
     <AuthContext.Provider value={authValues}>
