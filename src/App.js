@@ -5,6 +5,7 @@ import Authpage from './component/Pages/Authpage';
 import Profilepage from './component/Pages/Profilepage';
 import UserProfileNotify from './component/Alert/UserProfileNotify';
 import Expensetrackerpage from './component/Expensetracker/Expensetrackerpage';
+import Forgotpass from './component/Pages/Forgotpass';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path='/expensepage'>
               <Expensetrackerpage/>
+            </Route>
+            <Route path='/resetpasspage'>
+                <Forgotpass/>
             </Route>
         </Switch>
     </>

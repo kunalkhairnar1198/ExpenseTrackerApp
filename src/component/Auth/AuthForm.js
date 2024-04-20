@@ -12,10 +12,13 @@ const AuthForm = () => {
     const confirmPassRef = useRef();
     const navigate = useHistory()
     const authctx = useContext(AuthContext)
-    
 
     const switchHandlers =()=>{
         setIsLogin(prevState => !prevState)
+    }
+
+    const isForgotpassHandler =()=>{
+        navigate.replace('/resetpasspage')
     }
 
     const submitHandler = async (event) => {
@@ -107,11 +110,10 @@ const AuthForm = () => {
                                 {isLogin ? 'Login' : 'Signup '}
                                 {isLoading && <p>Sending Request....</p>}
                             </Button>
-                            {isLogin && (
-                                 <Button variant="danger" type="button" style={{ backgroundColor: 'transparent', border: 'none', color: 'blue' }} >
+
+                            <Button onClick={isForgotpassHandler} variant="danger" type="button" style={{ backgroundColor: 'transparent', border: 'none', color: 'blue' }} >
                                  forgot password
-                                 </Button>
-                            )}
+                            </Button>
                             
                             <Button onClick={switchHandlers} className="btn2" style={{ backgroundColor: 'transparent', border: 'none', color: 'black' }}>
                                 {isLogin ? 'Create new Account' : 'Already Have an account? Login'}
