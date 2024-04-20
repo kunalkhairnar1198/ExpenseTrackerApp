@@ -64,6 +64,7 @@ const AuthForm = () => {
 
                 authctx.login(data.idToken)
                 authctx.iscompleteProfile(data.displayName)
+                localStorage.setItem('email', data.email)
 
                 data.displayName ? navigate.replace('/expensepage') :  navigate.replace('/profilepage')
                 

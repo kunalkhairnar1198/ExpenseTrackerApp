@@ -4,6 +4,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { AuthContext } from '../../Store/auth-context'
 import UserProfileNotify from '../Alert/UserProfileNotify'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import VerifyEmail from './VerifyAuth/VerifyEmail'
 
 const Profilepage = () => {
   
@@ -69,7 +70,7 @@ const Profilepage = () => {
         if(response.ok){
           const data = await response.json()
           const user = data.users[0]
-          // console.log(data.users)
+          console.log(data.users)
               if(user){
                 if(fullnameRef.current){
                   fullnameRef.current.value = user.displayName || '';
@@ -111,6 +112,7 @@ const Profilepage = () => {
                                 <Form.Control type="url" placeholder="Last name" ref={linkRef}/>
                             </Form.Group>
                         </Col>
+                        <VerifyEmail/>
                     </Row>
                         <div className="actions">
                             <Button type='submit' className="btn2" >

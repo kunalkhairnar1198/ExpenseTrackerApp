@@ -28,6 +28,10 @@ const CompleteHandler =(userdata)=>{
     console.log(userData)
 }
 
+const VerifyUserEmail =()=>{
+    
+}
+
 const logoutHanlder =()=>{
 
 }
