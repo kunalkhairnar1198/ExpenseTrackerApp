@@ -6,8 +6,12 @@ import Profilepage from './component/Pages/Profilepage';
 import UserProfileNotify from './component/Alert/UserProfileNotify';
 import Expensetrackerpage from './component/Expensetracker/Expensetrackerpage';
 import Forgotpass from './component/Pages/Forgotpass';
+import { useContext } from 'react';
+import { AuthContext } from './Store/auth-context';
 
 function App() {
+  const tokenCtx = useContext(AuthContext)
+  console.log(tokenCtx)
   return (
     <>
         <Switch>

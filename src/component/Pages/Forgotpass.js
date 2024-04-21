@@ -1,51 +1,63 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { AuthContext } from '../../Store/auth-context'
 
 const Forgotpass = (props) => {
 
     const emailPassRef = useRef()
+    const changePassRef = useRef()
     const navigate = useHistory()
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState()
     const [verificationSent, setVerificationSent] = useState(false);
+    const [isForgot, setIsForgot] = useState(true)
 
     const submitHandler =async(event)=>{
         event.preventDefault()
+    
+    if(isForgot) {
         const forgotPassmail = emailPassRef.current.value;
-        // console.log(forgotPassmail)
+       
+                try {
+                    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
+                        method: 'POST',
+                        body: JSON.stringify({
+                            email: forgotPassmail,
+                            requestType:"PASSWORD_RESET"
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
 
-        try {
-            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
-                method: 'POST',
-                body: JSON.stringify({
-                    email: forgotPassmail,
-                    requestType:"PASSWORD_RESET"
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
+                    setIsLoading(true)
+                    
+                    if(response.ok){
+                        const data = await response.json()
+                        console.log(data)
+                        setIsLoading(false)
+                        setVerificationSent(true)
+                    }else{
+                        const errorData = await response.json;
+                        setVerificationSent(false)
+                        setIsError(errorData.error.message)
+                        console.error('passwordResetError', errorData)
+                    }
+                } catch (error) {
+                    setIsError('An error while sending the verification')
+                    console.log('password reset error',error)
                 }
-            })
-            setIsLoading(true)
-            
-            if(response.ok){
-                const data = await response.json()
-                console.log(data)
-                setIsLoading(false)
-                setIsError('SUCCESFULY SEND DATA TO THE EMAIL')
-                navigate.replace('/authpage')
+
             }else{
-                const errorData = await response.json;
-                setVerificationSent(true)
-                setIsError(errorData.error.message)
-                console.error('passwordResetError', errorData)
+               const passwordRef = changePassRef.current.value
+               console.log('password will change',passwordRef) 
+                navigate.replace('/authpage')
             }
-        } catch (error) {
-            setIsError('An error while sending the verification')
-            console.log('password reset error',error)
-        }
+    }
 
-
+    const changeHandlers =()=>{
+        setIsForgot(false)
     }
 
     const BackToLogin =()=>{
@@ -61,14 +73,20 @@ const Forgotpass = (props) => {
         <Card.Body>
             <Card.Title className="text-center">Reset password</Card.Title>
                    <Form> 
+                   {isForgot ? (
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" ref={emailPassRef} required/>
-                        {verificationSent && (<p style={{color:'red'}}>Verification email is not found.</p>)}
-                    </Form.Group>
+                    </Form.Group>):(
+
+                    <Form.Group className="mb-3" controlId="formBasicpassword">
+                        <Form.Label>Password Change</Form.Label>
+                        <Form.Control type="password" placeholder="Enter new password" ref={changePassRef} required/>
+                    </Form.Group>)}
+
                     <div className="actions">
                         <Button onClick={submitHandler} type="submit" className="btn1">
-                            Send Verification mail
+                            {isForgot ? ' Send Verification mail' : 'Forgot password'}
                             {isLoading && <Spinner animation="border" size="lg" />}
                         </Button>
                         <Button onClick={BackToLogin} className="btn2" style={{ backgroundColor: 'transparent', border: 'none', color: 'black' }}>
@@ -79,9 +97,18 @@ const Forgotpass = (props) => {
             </Card.Body>
         </Card>
     </section>
-    {isLoading && <Alert style={{ width: '25rem', margin: 'auto', textAlign: 'center', marginTop: '2rem' }}>
-        {verificationSent && isError}
+
+    {isLoading && (<Alert style={{ width: '25rem', margin: 'auto', textAlign: 'center', marginTop: '2rem' }}>
+        {isError}
+    </Alert>)}
+
+    {verificationSent && <Alert style={{ width: '25rem', margin: 'auto', textAlign: 'center', marginTop: '2rem' }}>
+        Verification email sent successfully. Please check your inbox.
+                        <Button onClick={changeHandlers} className="btn2" style={{ backgroundColor: 'transparent', border: 'none', color: 'blue' }}>
+                            Click here change password
+                        </Button>
     </Alert>}
+
     </>
   )
 }
