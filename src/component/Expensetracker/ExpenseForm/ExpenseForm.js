@@ -1,21 +1,21 @@
 import React, { useRef, useState } from 'react';
-import { Button, Card, Col, Form, FormControl, FormLabel, Row } from 'react-bootstrap';
+import { Button, Card, Col, Form, FormControl, FormLabel, Row, Spinner } from 'react-bootstrap';
 import ExpenseItem from '../ExpensItem/ExpenseItem';
 
 const ExpenseForm = () => {
   const priceRef = useRef();
   const descRef = useRef();
   const selectRef = useRef();
-  const [expenseItems, setExpenseItem] = useState([
-    // {
-    //   id_:4,
-    //   price :50,
-    //   description:'fsdfsd',
-    //   category:'Food',
-    // }
-  ])
+  const [expenseItems, setExpenseItem] = useState([])
 
-  const onSubmitHandler = (event) => {
+  let email = localStorage.getItem('email')
+
+  if(email){
+    email = email.replace(/[@.""]/g, "");
+  }
+  console.log(email)
+
+  const onSubmitHandler = async(event) => {
     event.preventDefault();
     const price = priceRef.current.value;
     const description = descRef.current.value;
@@ -31,10 +31,28 @@ const ExpenseForm = () => {
     }
     // console.log(obj)
 
-    setExpenseItem(PrevItem => [...PrevItem, obj])
-  
+    // setExpenseItem(PrevItem => [...PrevItem, obj])
 
+    try {
+      const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}.json`,{
+        method :'POST',
+        body: JSON.stringify(obj),
+        headers:{
+          "Content-Type": "application/json",
+        },
+       
+      })
+      const data = await response.json()
+      if(response.ok){
+        setExpenseItem(data)
+      }
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   };
+
+  
   console.log(expenseItems)
   return (
     <>

@@ -11,7 +11,9 @@ import { AuthContext } from './Store/auth-context';
 
 function App() {
   const tokenCtx = useContext(AuthContext)
-  console.log(tokenCtx)
+  console.log(tokenCtx.isLogedIn)
+
+
   return (
     <>
         <Switch>
@@ -21,15 +23,15 @@ function App() {
             <Route path='/authpage' >
               <Authpage/>
             </Route>
-            <Route path='/profilepage' >
+            {tokenCtx.isLogedIn && <Route path='/profilepage' >
               <Profilepage/>
-            </Route>
-            <Route path='/userprofilenotify'>
+            </Route>}
+            {tokenCtx.isLogedIn && <Route path='/userprofilenotify'>
               <UserProfileNotify/>
-            </Route>
-            <Route path='/expensepage'>
+            </Route>}
+            {tokenCtx.isLogedIn && <Route path='/expensepage'>
               <Expensetrackerpage/>
-            </Route>
+            </Route>}
             <Route path='/resetpasspage'>
                 <Forgotpass/>
             </Route>

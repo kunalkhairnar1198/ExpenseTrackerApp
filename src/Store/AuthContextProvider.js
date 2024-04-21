@@ -9,7 +9,7 @@ const userIsLoggedIn = !!token;
 
 useEffect(()=>{
     const storedToken = localStorage.getItem('authtoken')
-    if(!storedToken){
+    if(storedToken){
         console.log(storedToken)
         setToken(storedToken)
     }
@@ -26,10 +26,6 @@ const CompleteHandler =(userdata)=>{
         setUserData(!userdata)
     
     console.log(userData)
-}
-
-const VerifyUserEmail =()=>{
-    
 }
 
 const logoutHanlder =()=>{
