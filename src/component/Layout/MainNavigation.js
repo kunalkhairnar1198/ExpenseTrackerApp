@@ -36,7 +36,7 @@ const MainNavigation = () => {
                                   <Nav.Link as={NavLink} to="/authpage" onClick={logoutHanlder}>SignOut</Nav.Link>
                                 )}
                                 
-                   <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>
+                   {authCtx.isLogedIn && <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>}
           </Nav>     
       </Container>
     </Navbar>

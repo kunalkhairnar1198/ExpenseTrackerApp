@@ -15,6 +15,38 @@ const ExpenseForm = () => {
   }
   console.log(email)
 
+
+  const EditHandleritems = (editedItem) => {
+    console.log(editedItem);
+  
+    priceRef.current.value = editedItem.price;
+    descRef.current.value = editedItem.description;
+    selectRef.current.value = editedItem.category;
+  
+    const index = expenseItems.findIndex(item => item.id === editedItem.id);
+    console.log(index);
+    
+    if (index !== -1) {
+      if (
+        expenseItems[index].price !== editedItem.price ||
+        expenseItems[index].description !== editedItem.description ||
+        expenseItems[index].category !== editedItem.category
+      ) {
+        const updatedExpenseItems = [...expenseItems];
+  
+        updatedExpenseItems[index] = {
+          ...updatedExpenseItems[index],
+          price: editedItem.price,
+          description: editedItem.description,
+          category: editedItem.category
+        };
+  
+        setExpenseItem(updatedExpenseItems);
+      }
+    }
+  };
+  
+
   const onSubmitHandler = async(event) => {
     event.preventDefault();
     const price = priceRef.current.value;
@@ -50,7 +82,13 @@ const ExpenseForm = () => {
     } catch (error) {
       console.log(error)
     }
+
+    priceRef.current.value ='';
+    descRef.current.value='';
+    selectRef.current.value='';
   };
+
+  
 
   
   console.log(expenseItems)
@@ -80,6 +118,7 @@ const ExpenseForm = () => {
                 <Form.Group controlId="formSelect">
                   <Form.Label>Select a category</Form.Label>
                   <Form.Select aria-label="Select" ref={selectRef}>
+                    <option >Select</option>
                     <option value="Food">Food</option>
                     <option value="Petrol">Petrol</option>
                     <option value="Salary">Salary</option>
@@ -98,7 +137,7 @@ const ExpenseForm = () => {
       </Card>
     </div>
     <div className='d-flex align-items-center justify-content-center mt-5'>
-      <ExpenseItem items={expenseItems}/>
+      <ExpenseItem items={expenseItems} onEditHandler={EditHandleritems}/>
     </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Button, Card, Col } from 'react-bootstrap';
 
 const ExpenseItem = (props) => {
     const [expesnselist, setExpenselist] = useState([])
@@ -36,21 +36,55 @@ const ExpenseItem = (props) => {
             console.log(error)
           }
     },[email])
-    
+
+    const handleDeleteitem = async(id)=>{
+
+        try {
+            const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}/${id}.json`,{
+                method:'DELETE'
+            })
+            console.log('resppnse',response)
+            setExpenselist(prev => prev.filter((item)=> item.id !== id))
+
+        } catch (error) {   
+                console.log(error)
+        }
+    }
+
+    const EditHandleritem = async(item) => {
+        // console.log(item)   
+
+        try {
+            const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}/${item.id}.json`)
+            const data = await response.json()
+            console.log(data, props)
+            props.onEditHandler(item)
+            handleDeleteitem(item.id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div>
         {expesnselist.length === 0 ?(
            <h2>expense are not found</h2>):(
                 expesnselist.map((item) => (
-                    <Card key={item.id}>
-                        <Card.Body>
-                            <Card.Title>{item.description}</Card.Title>
-                            <Card.Text>
+                    <Card key={item.id} style={{width:'80rem', boxShadow:'2rem', marginBlockEnd:'2rem'}}>
+                        <Card.Body className='d-flex mt-2'>
+                            <span>{item.description}</span>
+                            <span>
                                 <strong>Price:</strong> {item.price}
-                            </Card.Text>
-                            <Card.Text>
+                            </span>
+                            <span>
                                 <strong>Category:</strong> {item.category}
-                            </Card.Text>
+                            </span>
+                            <div className='row'>
+                                <Col className='justify-content-end'>
+                                <Button onClick={()=> EditHandleritem(item)}>Edit</Button>
+                                <Button onClick={ () => handleDeleteitem(item.id)}>Delete</Button>
+                                </Col>
+                            </div>
                         </Card.Body>
                     </Card>
                 ))
