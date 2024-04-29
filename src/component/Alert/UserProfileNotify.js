@@ -1,15 +1,14 @@
-import React, { useContext } from 'react'
 import { Alert } from 'react-bootstrap'
 import classes from './UserProfile.module.css'
-import { AuthContext } from '../../Store/auth-context'
+import { useDispatch } from 'react-redux'
+import { profileAction } from '../../ReduxStore/Profile-slice/Profile-slice'
 
 const UserProfileNotify = () => {
 
-  const authCtx = useContext(AuthContext)
-  
+  const dispatch = useDispatch()
 
   const completeProfileHandler =()=>{
-    authCtx.iscompleteProfile(true)
+    dispatch(profileAction.isCompleteProfile(true))
   }
 
   return (

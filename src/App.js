@@ -6,30 +6,28 @@ import Profilepage from './component/Pages/Profilepage';
 import UserProfileNotify from './component/Alert/UserProfileNotify';
 import Expensetrackerpage from './component/Expensetracker/Expensetrackerpage';
 import Forgotpass from './component/Pages/Forgotpass';
-import { useContext } from 'react';
-import { AuthContext } from './Store/auth-context';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const tokenCtx = useContext(AuthContext)
-  console.log(tokenCtx.isLogedIn)
 
-
+    const isAuth = useSelector(state => state.auth.isAuthenticated)
+    console.log(isAuth)  
   return (
     <>
         <Switch>
             <Route path='/' exact>
-              <Layout/>
+              {!isAuth ? <Layout/> : <Expensetrackerpage/>}
             </Route>
             <Route path='/authpage' >
               <Authpage/>
             </Route>
-            {tokenCtx.isLogedIn && <Route path='/profilepage' >
+            {isAuth && <Route path='/profilepage' >
               <Profilepage/>
             </Route>}
-            {tokenCtx.isLogedIn && <Route path='/userprofilenotify'>
+            {isAuth && <Route path='/userprofilenotify'>
               <UserProfileNotify/>
             </Route>}
-            {tokenCtx.isLogedIn && <Route path='/expensepage'>
+            {isAuth && <Route path='/expensepage'>
               <Expensetrackerpage/>
             </Route>}
             <Route path='/resetpasspage'>

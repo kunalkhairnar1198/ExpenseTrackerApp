@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
 import {  Container, Nav,   Navbar } from 'react-bootstrap'
 import  {NavLink}  from 'react-router-dom'
 import './MainNavigation.css'
-import { AuthContext } from '../../Store/auth-context'
+import { useDispatch, useSelector } from 'react-redux'
+import { authAction } from '../../ReduxStore/AuthRtk/Auth-Reducer'
 
 const MainNavigation = () => {
     
-  const authCtx = useContext(AuthContext)
-  console.log(authCtx)
+  const dispatch = useDispatch()
+  const isAuth = useSelector(state => state.auth.isAuthenticated)
 
   const logoutHanlder=()=>{
-    authCtx.logout()
+    dispatch(authAction.logoutHandler())
   }
 
   return (
@@ -30,13 +30,13 @@ const MainNavigation = () => {
           </Nav> */}
 
           <Nav className="d-flex align-items-center">
-                   {!authCtx.isLogedIn ? (
+                   {!isAuth ? (
                                 <Nav.Link as={NavLink} to="/authpage" >SignIn</Nav.Link>
                                 ):(
                                   <Nav.Link as={NavLink} to="/authpage" onClick={logoutHanlder}>SignOut</Nav.Link>
                                 )}
                                 
-                   {authCtx.isLogedIn && <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>}
+                   {isAuth && <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>}
           </Nav>     
       </Container>
     </Navbar>

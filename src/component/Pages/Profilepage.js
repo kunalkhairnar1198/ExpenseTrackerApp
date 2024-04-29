@@ -1,20 +1,21 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, {  useEffect, useRef } from 'react'
 import Layout from '../Layout/Layout'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
-import { AuthContext } from '../../Store/auth-context'
 import UserProfileNotify from '../Alert/UserProfileNotify'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import VerifyEmail from './VerifyAuth/VerifyEmail'
+import { useSelector } from 'react-redux'
 
 const Profilepage = () => {
   
   const fullnameRef = useRef()
   const linkRef = useRef()
   const navigate = useHistory()
-  const authCtx = useContext(AuthContext)
-  console.log(authCtx)
-
-  const userData = !authCtx.userdata;
+ 
+  
+  const tokenId = useSelector(state => state.profile.token)
+  const usersData = useSelector(state => state.profile.userData)
+   const userData = !usersData;
   console.log(userData)
 
   useEffect(()=>{
@@ -36,7 +37,7 @@ const Profilepage = () => {
       const  response = await fetch(url ,{
         method:'POST',
         body:JSON.stringify({
-          idToken:authCtx.token,
+          idToken:tokenId,
           displayName:fullname,
           photoUrl:photolink
         }),
@@ -63,7 +64,7 @@ const Profilepage = () => {
                 'Content-Type':'application/json',
               },
                   body:JSON.stringify({
-                    idToken:authCtx.token,
+                    idToken:tokenId,
                   })  
         })
 

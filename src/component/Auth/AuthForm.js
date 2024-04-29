@@ -1,8 +1,10 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, {  useRef, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import './AuthForm.css';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../Store/auth-context';
+import {useDispatch} from 'react-redux';
+import { authAction } from '../../ReduxStore/AuthRtk/Auth-Reducer';
+import { profileAction } from '../../ReduxStore/Profile-slice/Profile-slice';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true)
@@ -11,7 +13,7 @@ const AuthForm = () => {
     const passwordRef = useRef();
     const confirmPassRef = useRef();
     const navigate = useHistory()
-    const authctx = useContext(AuthContext)
+    const dispatch = useDispatch()
 
     const switchHandlers =()=>{
         setIsLogin(prevState => !prevState)
@@ -62,11 +64,10 @@ const AuthForm = () => {
             setIsLoading(false)
             if (response.ok) {
                 const data = await response.json();
-                console.log(authctx)
                 console.log('Authentication successful:', data);
-
-                authctx.login(data.idToken)
-                authctx.iscompleteProfile(data.displayName)
+                dispatch(authAction.loginHandler(data.idToken))
+                dispatch(profileAction.isCompleteProfile(data.displayName))
+                
                 localStorage.setItem('email', data.email)
 
                 data.displayName ? navigate.replace('/expensepage') :  navigate.replace('/profilepage')

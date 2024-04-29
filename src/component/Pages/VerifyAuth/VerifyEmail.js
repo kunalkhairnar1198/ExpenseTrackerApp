@@ -1,15 +1,14 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, {  useRef, useState } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
-import { AuthContext } from '../../../Store/auth-context';
+import { useSelector } from 'react-redux';
 
 const VerifyEmail = () => {
     const verifyEmailRef = useRef()
     const [verificationSent, setVerificationSent] = useState(false);
     const [error, setError] = useState(null)    
-    const authCtx = useContext(AuthContext)
-    const tokenid = authCtx.token
-    // console.log(authCtx)
-    // const email = localStorage.getItem('email')
+    const tokenid = useSelector(state => state.profile.token)
+    console.log(tokenid)
+    const email = localStorage.getItem('email')
 
 
     const VerifyUserEmail = async(event)=>{
