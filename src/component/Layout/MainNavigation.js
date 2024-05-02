@@ -4,6 +4,7 @@ import './MainNavigation.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { authAction } from '../../ReduxStore/AuthRtk/Auth-Reducer'
 import PremiumButton from '../Expensetracker/Premium/PremiumButton'
+import '../Expensetracker/Premium/Premium.css';
 
 const MainNavigation = () => {
     

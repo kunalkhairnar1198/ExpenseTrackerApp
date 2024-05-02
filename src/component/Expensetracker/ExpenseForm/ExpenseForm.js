@@ -4,6 +4,7 @@ import ExpenseItem from '../ExpensItem/ExpenseItem';
 import {expenseAction} from '../../../ReduxStore/ExpenseRtk/expense-slice';
 import {useDispatch, useSelector} from 'react-redux';
 import TotalExpense from '../ExpensItem/TotalExpense';
+import '../Premium/Premium.css'
 
 const ExpenseForm = () => {
   const priceRef = useRef();
@@ -12,6 +13,8 @@ const ExpenseForm = () => {
 
   const dispatch = useDispatch()
   const expenselistdata = useSelector(state => state.expense.expenseData)
+  const darkMode = useSelector(state => state.theme.darkMode)
+
   // console.log(expenselistdata)
 
   let email = localStorage.getItem('email')
@@ -94,22 +97,22 @@ const ExpenseForm = () => {
 
   
   return (
-    <>
-    <div className="d-flex align-items-center justify-content-center mt-3">
-      <Card className="mt-4 shadow  bg-white rounded" style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem' }}>
-        <Card.Body>
-          <Card.Title className="text-center">Expense Form</Card.Title>
+    <div className={!darkMode ? 'darkmode' : ''}>
+    <div className="d-flex align-items-center justify-content-center" >
+      <Card className='mt-4 shadow rounded' style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem' }}>
+        <Card.Body className={!darkMode ?'darkmode':''}>
+          <Card.Title className={`text-center ${!darkMode ? 'text-white':''}`}>Expense Form</Card.Title>
           <Form onSubmit={onSubmitHandler}>
             <Row>
               <Col>
                 <Form.Group controlId="form8Example1">
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel className={!darkMode ? 'text-white':''}>Price</FormLabel>
                   <FormControl type="number" placeholder="Enter price" ref={priceRef} />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="form8Example2">
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className={!darkMode ? 'text-white':''}>Description</FormLabel>
                   <FormControl type="text" placeholder="Enter description" ref={descRef} />
                 </Form.Group>
               </Col>
@@ -117,7 +120,7 @@ const ExpenseForm = () => {
             <Row>
               <Col>
                 <Form.Group controlId="formSelect">
-                  <Form.Label>Select a category</Form.Label>
+                  <Form.Label className={!darkMode ? 'text-white':''}>Select a category</Form.Label>
                   <Form.Select aria-label="Select" ref={selectRef}>
                     <option value='select'>Select</option>
                     <option value="Food">Food</option>
@@ -144,7 +147,7 @@ const ExpenseForm = () => {
     <div className='d-flex align-items-center justify-content-center mt-5'>
       <ExpenseItem onEditHandler={EditHandleritems}/>
     </div>
-    </>
+    </div>
   );
 };
 

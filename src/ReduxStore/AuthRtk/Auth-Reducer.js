@@ -18,6 +18,7 @@ const authSlice = createSlice({
     
         logoutHandler(state){
             localStorage.removeItem('authtoken')
+            localStorage.removeItem('darkMode')
             state.token = null
         }
     }
