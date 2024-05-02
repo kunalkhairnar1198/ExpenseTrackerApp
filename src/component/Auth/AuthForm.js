@@ -4,7 +4,7 @@ import './AuthForm.css';
 import { useHistory } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { authAction } from '../../ReduxStore/AuthRtk/Auth-Reducer';
-import { profileAction } from '../../ReduxStore/Profile-slice/Profile-slice';
+import { profileAction } from '../../ReduxStore/AuthRtk/Profile-slice/Profile-slice';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true)

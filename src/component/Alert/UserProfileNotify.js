@@ -1,7 +1,7 @@
 import { Alert } from 'react-bootstrap'
 import classes from './UserProfile.module.css'
 import { useDispatch } from 'react-redux'
-import { profileAction } from '../../ReduxStore/Profile-slice/Profile-slice'
+import { profileAction } from '../../ReduxStore/AuthRtk/Profile-slice/Profile-slice'
 
 const UserProfileNotify = () => {
 

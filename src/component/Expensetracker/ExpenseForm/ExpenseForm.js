@@ -89,7 +89,7 @@ const ExpenseForm = () => {
 
     priceRef.current.value ='';
     descRef.current.value='';
-    selectRef.current.value='';
+    selectRef.current.value='select';
   };
 
   
@@ -119,7 +119,7 @@ const ExpenseForm = () => {
                 <Form.Group controlId="formSelect">
                   <Form.Label>Select a category</Form.Label>
                   <Form.Select aria-label="Select" ref={selectRef}>
-                    <option >Select</option>
+                    <option value='select'>Select</option>
                     <option value="Food">Food</option>
                     <option value="Petrol">Petrol</option>
                     <option value="Salary">Salary</option>

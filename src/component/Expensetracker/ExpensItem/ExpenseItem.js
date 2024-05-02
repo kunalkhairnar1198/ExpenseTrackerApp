@@ -70,12 +70,12 @@ const ExpenseItem = (props) => {
     }
 
     return (
+        <>
         <Card className="mt-0 shadow p-3 mb-5 bg-white rounded" style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem', boxShadow:'5rem' }}>
         {expenseLists.length === 0 ?(
            <h2>expense are not found</h2>):(
             expenseLists.map((item) => (
-                <React.Fragment key={item.id}>
-                    <Card className='mt-4 mb-0 shadow bg-white rounded' style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
+                    <Card  key={item.id} className='mt-4 mb-0 shadow bg-white rounded' style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
                         <Card.Body className='d-flex mt-2'>
                             <div style={{ flex: 1}}>
                                 <span>
@@ -94,10 +94,10 @@ const ExpenseItem = (props) => {
                             </div>
                         </Card.Body>
                     </Card>
-                </React.Fragment>
                 ))
         )}
         </Card>
+        </>
     );
 };
 

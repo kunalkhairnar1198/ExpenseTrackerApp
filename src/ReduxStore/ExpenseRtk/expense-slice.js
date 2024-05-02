@@ -32,6 +32,5 @@ const expenseSlice = createSlice({
     }
 })
 
-console.log(initialExpense.expenseData)
 export const expenseAction = expenseSlice.actions;
 export default expenseSlice.reducer;
