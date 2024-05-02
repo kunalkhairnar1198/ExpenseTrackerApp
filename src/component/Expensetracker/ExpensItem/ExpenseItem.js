@@ -1,8 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, Col } from 'react-bootstrap';
+import React, { useCallback, useEffect } from 'react';
+import { Button, Card } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { expenseAction } from '../../../ReduxStore/ExpenseRtk/expense-slice';
 
 const ExpenseItem = (props) => {
-    const [expesnselist, setExpenselist] = useState([])
+    const expenseLists = useSelector(state => state.expense.expenseData)
+    console.log(expenseLists)
+    const dispatch = useDispatch()
+
     let email = localStorage.getItem('email')
 
     if(email){
@@ -11,7 +16,7 @@ const ExpenseItem = (props) => {
 
     useEffect(()=>{
         GetData()
-    },[props.items])  
+    },[])  
 
     const GetData = useCallback( async()=>{
         try {
@@ -28,8 +33,7 @@ const ExpenseItem = (props) => {
                     category:data[key].category
                 })
             }
-
-            setExpenselist(loadedData)
+            dispatch(expenseAction.addNewExpense(loadedData))
             console.log(loadedData)
 
           } catch (error) {
@@ -44,7 +48,7 @@ const ExpenseItem = (props) => {
                 method:'DELETE'
             })
             console.log('resppnse',response)
-            setExpenselist(prev => prev.filter((item)=> item.id !== id))
+            dispatch(expenseAction.deleteExpense(id))
 
         } catch (error) {   
                 console.log(error)
@@ -58,7 +62,7 @@ const ExpenseItem = (props) => {
             const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}/${item.id}.json`)
             const data = await response.json()
             console.log(data, props)
-            props.onEditHandler(item)
+            props.onEditHandler(item.id, item)
             handleDeleteitem(item.id)
         } catch (error) {
             console.log(error)
@@ -66,30 +70,34 @@ const ExpenseItem = (props) => {
     }
 
     return (
-        <div>
-        {expesnselist.length === 0 ?(
+        <Card className="mt-0 shadow p-3 mb-5 bg-white rounded" style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem', boxShadow:'5rem' }}>
+        {expenseLists.length === 0 ?(
            <h2>expense are not found</h2>):(
-                expesnselist.map((item) => (
-                    <Card key={item.id} style={{width:'80rem', boxShadow:'2rem', marginBlockEnd:'2rem'}}>
+            expenseLists.map((item) => (
+                <React.Fragment key={item.id}>
+                    <Card className='mt-4 mb-0 shadow bg-white rounded' style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
                         <Card.Body className='d-flex mt-2'>
-                            <span>{item.description}</span>
-                            <span>
-                                <strong>Price:</strong> {item.price}
-                            </span>
-                            <span>
-                                <strong>Category:</strong> {item.category}
-                            </span>
-                            <div className='row'>
-                                <Col className='justify-content-end'>
-                                <Button onClick={()=> EditHandleritem(item)}>Edit</Button>
-                                <Button onClick={ () => handleDeleteitem(item.id)}>Delete</Button>
-                                </Col>
+                            <div style={{ flex: 1}}>
+                                <span>
+                                    <strong>Desc:</strong> {item.description}
+                                </span>
+                                <span>
+                                    <strong>Price:</strong> {item.price}
+                                </span>
+                                <span>
+                                    <strong>Category:</strong> {item.category}
+                                </span>
+                            </div>
+                            <div className='d-flex align-items-center gap-3'>
+                                <Button onClick={() => EditHandleritem(item)}>Edit</Button>
+                                <Button variant='danger' onClick={() => handleDeleteitem(item.id)}>Delete</Button>
                             </div>
                         </Card.Body>
                     </Card>
+                </React.Fragment>
                 ))
         )}
-        </div>
+        </Card>
     );
 };
 

@@ -3,11 +3,13 @@ import  {NavLink}  from 'react-router-dom'
 import './MainNavigation.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { authAction } from '../../ReduxStore/AuthRtk/Auth-Reducer'
+import PremiumButton from '../Expensetracker/Premium/PremiumButton'
 
 const MainNavigation = () => {
     
   const dispatch = useDispatch()
   const isAuth = useSelector(state => state.auth.isAuthenticated)
+  const totalamt = useSelector(state => state.expense.totalAmount)
 
   const logoutHanlder=()=>{
     dispatch(authAction.logoutHandler())
@@ -15,7 +17,6 @@ const MainNavigation = () => {
 
   return (
     <>
-    
     <Navbar  expand="lg" className="custom-navbar">
   
       <Container fluid>
@@ -30,12 +31,13 @@ const MainNavigation = () => {
           </Nav> */}
 
           <Nav className="d-flex align-items-center">
+                   {totalamt > 10000 && <PremiumButton/>}
                    {!isAuth ? (
                                 <Nav.Link as={NavLink} to="/authpage" >SignIn</Nav.Link>
                                 ):(
                                   <Nav.Link as={NavLink} to="/authpage" onClick={logoutHanlder}>SignOut</Nav.Link>
                                 )}
-                                
+
                    {isAuth && <Nav.Link as={NavLink} to="/profilepage" >Profile</Nav.Link>}
           </Nav>     
       </Container>

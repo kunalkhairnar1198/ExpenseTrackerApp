@@ -1,38 +1,44 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Button, Card, Col, Form, FormControl, FormLabel, Row, Spinner } from 'react-bootstrap';
 import ExpenseItem from '../ExpensItem/ExpenseItem';
+import {expenseAction} from '../../../ReduxStore/ExpenseRtk/expense-slice';
+import {useDispatch, useSelector} from 'react-redux';
+import TotalExpense from '../ExpensItem/TotalExpense';
 
 const ExpenseForm = () => {
   const priceRef = useRef();
   const descRef = useRef();
   const selectRef = useRef();
-  const [expenseItems, setExpenseItem] = useState([])
+
+  const dispatch = useDispatch()
+  const expenselistdata = useSelector(state => state.expense.expenseData)
+  // console.log(expenselistdata)
 
   let email = localStorage.getItem('email')
 
   if(email){
     email = email.replace(/[@.""]/g, "");
   }
-  console.log(email)
+  // console.log(email)
 
 
-  const EditHandleritems = (editedItem) => {
+  const EditHandleritems = (itemid,editedItem) => {
     console.log(editedItem);
   
     priceRef.current.value = editedItem.price;
     descRef.current.value = editedItem.description;
     selectRef.current.value = editedItem.category;
   
-    const index = expenseItems.findIndex(item => item.id === editedItem.id);
+    const index = expenselistdata.findIndex(item => item.id === editedItem.id);
     console.log(index);
     
     if (index !== -1) {
       if (
-        expenseItems[index].price !== editedItem.price ||
-        expenseItems[index].description !== editedItem.description ||
-        expenseItems[index].category !== editedItem.category
+        expenselistdata[index].price !== editedItem.price ||
+        expenselistdata[index].description !== editedItem.description ||
+        expenselistdata[index].category !== editedItem.category
       ) {
-        const updatedExpenseItems = [...expenseItems];
+        const updatedExpenseItems = [...expenselistdata];
   
         updatedExpenseItems[index] = {
           ...updatedExpenseItems[index],
@@ -40,8 +46,7 @@ const ExpenseForm = () => {
           description: editedItem.description,
           category: editedItem.category
         };
-  
-        setExpenseItem(updatedExpenseItems);
+        dispatch(expenseAction.setEditExpense({itemid, updatedExpenseItems}))
       }
     }
   };
@@ -61,9 +66,8 @@ const ExpenseForm = () => {
       description: description,
       category:selectCat
     }
+    dispatch(expenseAction.addExpense(obj))
     // console.log(obj)
-
-    // setExpenseItem(PrevItem => [...PrevItem, obj])
 
     try {
       const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}.json`,{
@@ -74,11 +78,11 @@ const ExpenseForm = () => {
         },
        
       })
-      const data = await response.json()
       if(response.ok){
-        setExpenseItem(data)
+        const data = await response.json()
+        console.log(data)
       }
-      console.log(data)
+     
     } catch (error) {
       console.log(error)
     }
@@ -89,13 +93,10 @@ const ExpenseForm = () => {
   };
 
   
-
-  
-  console.log(expenseItems)
   return (
     <>
     <div className="d-flex align-items-center justify-content-center mt-3">
-      <Card className="mt-4" style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem' }}>
+      <Card className="mt-4 shadow  bg-white rounded" style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem' }}>
         <Card.Body>
           <Card.Title className="text-center">Expense Form</Card.Title>
           <Form onSubmit={onSubmitHandler}>
@@ -126,18 +127,22 @@ const ExpenseForm = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <div className="mt-2 d-grid gap-2 d-md-block">
+            <div className="d-flex align-items-center mt-2 gap-3 gap-md-2">
               <Button type="submit" className="btn" style={{ marginRight: '1rem' }}>
                 Submit
               </Button>
               <Button className="btn">Update Expense</Button>
+              <div className="ml-auto">
+                   {expenselistdata.length > 0 && <TotalExpense />}
+              </div>
             </div>
+                
           </Form>
         </Card.Body>
       </Card>
     </div>
     <div className='d-flex align-items-center justify-content-center mt-5'>
-      <ExpenseItem items={expenseItems} onEditHandler={EditHandleritems}/>
+      <ExpenseItem onEditHandler={EditHandleritems}/>
     </div>
     </>
   );
