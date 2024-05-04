@@ -18,18 +18,18 @@ const MainNavigation = () => {
 
   return (
     <>
-    <Navbar  expand="lg" className="custom-navbar">
+    <Navbar  expand="lg" className="custom-navbar fixed-top">
   
       <Container fluid>
           <Navbar.Brand href="/">
           <h3>Expense Tracker</h3>
           </Navbar.Brand>
 
-          {/* <Nav className="me-auto mb-2 mb-lg-0">
-            <Nav.Link as={NavLink} to="#" >Home</Nav.Link>
-            <Nav.Link as={NavLink} to="#">Procuct</Nav.Link>
-            <Nav.Link as={NavLink} to="#">About us</Nav.Link>
-          </Nav> */}
+          <Nav className="me-auto mb-2 mb-lg-0">
+            <Nav.Link as={NavLink} to="/authpage" >Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/authpage">Procuct</Nav.Link>
+            <Nav.Link as={NavLink} to="/authpage">About us</Nav.Link>
+          </Nav>
 
           <Nav className="d-flex align-items-center">
                    {totalamt > 10000 && <PremiumButton/>}

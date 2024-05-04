@@ -76,7 +76,7 @@ const ExpenseItem = (props) => {
     return (
         <>
         <Card
-            className={`mt-0 shadow p-3 ${!darkMode ? 'bg-dark' : ''} rounded `}
+            className={`mt-0 shadow mb-4 p-3 ${!darkMode ? 'bg-dark' : ''} rounded `}
             style={{ 
                 width: '100%', 
                 marginRight: '1rem', 
@@ -87,7 +87,7 @@ const ExpenseItem = (props) => {
         {expenseLists.length === 0 ?(
            <h2>expense are not found</h2>):(
             expenseLists.map((item) => (
-                    <Card  key={item.id} className={`mt-1 mb-1 ${!darkMode ? 'darkmode' : ''}`} style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
+                    <Card  key={item.id} className={`mt-1 mb-2 ${!darkMode ? 'darkmode' : ''}`} style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
                         <Card.Body className={`d-flex rounded ${!darkMode ?'darkmode':''}`}>
                             <div style={{ flex: 1}}>
                                 <span className={!darkMode? 'text-white':''}>

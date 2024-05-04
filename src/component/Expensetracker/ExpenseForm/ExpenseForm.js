@@ -98,7 +98,7 @@ const ExpenseForm = () => {
   
   return (
     <div className={!darkMode ? 'darkmode' : ''}>
-    <div className="d-flex align-items-center justify-content-center" >
+    <div className="d-flex align-items-center justify-content-center" style={{marginTop:'4rem'}} >
       <Card className='mt-4 shadow rounded' style={{ width: '100%', marginRight: '1rem', marginLeft: '1rem' }}>
         <Card.Body className={!darkMode ?'darkmode':''}>
           <Card.Title className={`text-center ${!darkMode ? 'text-white':''}`}>Expense Form</Card.Title>
