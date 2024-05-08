@@ -63,7 +63,7 @@ const PremiumButton = () => {
   return (
     <>
     <div className='d-flex align-items-center gap-3'>
-      <Button className='btn-secondary' onClick={darkModeHandler}>
+      <Button className='btn' variant='danger' onClick={darkModeHandler}>
         Premium Activate
       </Button>
 
