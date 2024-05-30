@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialProrileState = {
-    userData: true,
+    userData: false,
     token:localStorage.getItem('authtoken')
 }
 

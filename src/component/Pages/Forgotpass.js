@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import { Alert, Button, Card, Form, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { AuthContext } from '../../Store/auth-context'
+import Layout from '../Layout/Layout'
 
 const Forgotpass = (props) => {
 
@@ -20,7 +21,7 @@ const Forgotpass = (props) => {
         const forgotPassmail = emailPassRef.current.value;
        
                 try {
-                    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
+                    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDA7zMjUFdpSnxs25Xp__p0f9WQTS3TwSk',{
                         method: 'POST',
                         body: JSON.stringify({
                             email: forgotPassmail,
@@ -68,6 +69,9 @@ const Forgotpass = (props) => {
 
   return (
     <>
+        <div style={{marginTop:'6rem'}}>
+            <Layout/>
+        </div>
     <section className="d-flex align-items-center justify-content-center mt-5">
     <Card className="card">
         <Card.Body>

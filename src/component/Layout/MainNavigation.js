@@ -11,7 +11,7 @@ const MainNavigation = () => {
   const dispatch = useDispatch()
   const isAuth = useSelector(state => state.auth.isAuthenticated)
   const totalamt = useSelector(state => state.expense.totalAmount)
-
+  console.log('isAuth',isAuth)
   const logoutHanlder=()=>{
     dispatch(authAction.logoutHandler())
   }
@@ -25,11 +25,11 @@ const MainNavigation = () => {
           <h3>Expense Tracker</h3>
           </Navbar.Brand>
 
-          <Nav className="me-auto mb-2 mb-lg-0">
+          {/* <Nav className="me-auto mb-2 mb-lg-0">
             <Nav.Link as={NavLink} to="/authpage" >Home</Nav.Link>
             <Nav.Link as={NavLink} to="/authpage">Procuct</Nav.Link>
             <Nav.Link as={NavLink} to="/authpage">About us</Nav.Link>
-          </Nav>
+          </Nav> */}
 
           <Nav className="d-flex align-items-center">
                    {totalamt > 10000 && <PremiumButton/>}

@@ -18,11 +18,11 @@ const ExpenseItem = (props) => {
 
     useEffect(()=>{
         GetData()
-    },[])  
+    },[email])  
 
     const GetData = useCallback( async()=>{
         try {
-            const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}.json`)
+            const response = await fetch(`https://expensetracker-pro-default-rtdb.firebaseio.com/expenses/${email}.json`)
             const data = await response.json()
             // console.log(data)
             let loadedData = []
@@ -46,7 +46,7 @@ const ExpenseItem = (props) => {
     const handleDeleteitem = async(id)=>{
 
         try {
-            const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}/${id}.json`,{
+            const response = await fetch(`https://expensetracker-pro-default-rtdb.firebaseio.com/expenses/${email}/${id}.json`,{
                 method:'DELETE'
             })
             console.log('resppnse',response)
@@ -61,7 +61,7 @@ const ExpenseItem = (props) => {
         // console.log(item)   
 
         try {
-            const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}/${item.id}.json`)
+            const response = await fetch(`https://expensetracker-pro-default-rtdb.firebaseio.com/expenses/${email}/${item.id}.json`)
             const data = await response.json()
             console.log(data, props)
             props.onEditHandler(item.id, item)
@@ -72,10 +72,10 @@ const ExpenseItem = (props) => {
     }
 
     // const switchMode  = darkMode ? 'darkmode':'';
+    let key = 0;
 
     return (
-        <>
-        <Card
+        <Card key={key++}
             className={`mt-0 shadow mb-4 p-3 ${!darkMode ? 'bg-dark' : ''} rounded `}
             style={{ 
                 width: '100%', 
@@ -88,7 +88,7 @@ const ExpenseItem = (props) => {
            <h2>expense are not found</h2>):(
             expenseLists.map((item) => (
                     <Card  key={item.id} className={`mt-1 mb-2 ${!darkMode ? 'darkmode' : ''}`} style={{ width: 'calc(100% - 2rem)',  margin: '0 1rem' }}>
-                        <Card.Body className={`d-flex rounded ${!darkMode ?'darkmode':''}`}>
+                        <Card.Body  className={`d-flex rounded ${!darkMode ?'darkmode':''}`}>
                             <div style={{ flex: 1}}>
                                 <span className={!darkMode? 'text-white':''}>
                                     <strong className={!darkMode? 'text-white':''}>Desc:</strong> {item.description}
@@ -109,7 +109,6 @@ const ExpenseItem = (props) => {
                 ))
         )}
         </Card>
-        </>
     );
 };
 

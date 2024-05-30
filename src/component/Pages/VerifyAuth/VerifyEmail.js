@@ -20,7 +20,7 @@ const VerifyEmail = () => {
 
 
         try {
-            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
+            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDA7zMjUFdpSnxs25Xp__p0f9WQTS3TwSk',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

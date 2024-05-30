@@ -21,7 +21,7 @@ const Profilepage = () => {
   useEffect(()=>{
     console.log('USEEFFECT WORK')
     GetUserData()
-  },[])
+  },[usersData])
 
   const updateHandler =async(event)=>{
     event.preventDefault()
@@ -30,7 +30,7 @@ const Profilepage = () => {
     const photolink = linkRef.current.value;
     console.log(fullname, photolink)
 
-    let url ='https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc';
+    let url ='https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDA7zMjUFdpSnxs25Xp__p0f9WQTS3TwSk';
 
 
     try {
@@ -58,7 +58,7 @@ const Profilepage = () => {
 
   const GetUserData =async()=>{
       try {
-        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDsoMan9WsEPfVsu6_jJH-xs2zgguzFwrc',{
+        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDA7zMjUFdpSnxs25Xp__p0f9WQTS3TwSk',{
           method:'POST',
               headers:{
                 'Content-Type':'application/json',
@@ -110,7 +110,7 @@ const Profilepage = () => {
                         <Col>
                             <Form.Group >
                                 <Form.Label htmlFor="form6Example2">Profile Photo Url</Form.Label>
-                                <Form.Control type="url" placeholder="Last name" ref={linkRef}/>
+                                <Form.Control type="url" placeholder="Image link" ref={linkRef}/>
                             </Form.Group>
                         </Col>
                         <VerifyEmail/>

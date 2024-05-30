@@ -73,7 +73,7 @@ const ExpenseForm = () => {
     // console.log(obj)
 
     try {
-      const response = await fetch(`https://expense-tracker-66fc0-default-rtdb.firebaseio.com/expenses/${email}.json`,{
+      const response = await fetch(`https://expensetracker-pro-default-rtdb.firebaseio.com/expenses/${email}.json`,{
         method :'POST',
         body: JSON.stringify(obj),
         headers:{

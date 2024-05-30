@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import './Premium.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,14 +6,13 @@ import { themeAction } from '../../../ReduxStore/ThemeReducer/theme-slice'
 import Papa from 'papaparse';
 
 const PremiumButton = () => {
-  const darkModeState = localStorage.getItem('darkMode')
-
-  const [isDarkmode, setIsDarkmode] = useState(darkModeState === 'false')
+  const darkModeState = useSelector(state => state.theme.darkMode)
   const expenseLists = useSelector(state => state.expense.expenseData)
+  const [isDarkmode, setIsDarkmode] = useState(darkModeState)
   const dispatch = useDispatch()
 
   const darkModeHandler =()=>{
-    setIsDarkmode(true)
+    setIsDarkmode(!darkModeState)
   }
     
   const ToggleDarkMode =()=>{
